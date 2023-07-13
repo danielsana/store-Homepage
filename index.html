@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> User </title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+        integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
+
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Montserrat:600");
+        @import url("https://fonts.googleapis.com/css?family=Montserrat:800");
+        @import url("https://fonts.googleapis.com/css?family=Montserrat");
+
+        body {
+            display: block;
+            position: relative;
+        }
+
+        /* header container  */
+        .block {
+            margin-bottom: 0;
+            background: #fac7f7;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        header {
+            position: absolute;
+            top: 0;
+            display: flex;
+            height: 80px;
+            justify-content: space-evenly;
+        }
+        header ul{
+            display: inline-flex;
+            list-style-type: none;
+            margin: 0;
+            padding-left: 0;
+        }
+
+        .header-menu {
+            font-size: 17px;
+            line-height: 80px;
+        }
+
+        .header-menu li {
+            position: relative;
+            -webkit-transform: translateZ(0);
+            /** To avoid a flash when hover messages **/
+        }
+
+        header a{
+            text-decoration: none;
+            font-size: 15px;
+            color: #000;
+        }
+
+        .header-menu-tab {
+            padding: 0 30px;
+            display: block;
+            line-height: 74px;
+            font-size: 17px;
+            -webkit-transition: .2s;
+            transition: .2s;
+        }
+
+        .header-menu-tab:hover {
+            background: #eaecf2;
+            border-left: 4px solid crimson;
+            text-decoration: none;
+            text-transform: uppercase;
+            border-radius: 2%;
+            /* transition: 2s; */
+            transform: scale(0.95);
+        }
+
+        .header-menu-tab .icon {
+            padding-right: 15px;
+        }
+
+        .header-menu-number {
+            position: absolute;
+            line-height: 22px;
+            padding: 0 6px;
+            font-weight: 700;
+            background: #e64c65;
+            border-radius: 100%;
+            top: 15px;
+            right: 2px;
+            -webkit-transition: all .3s linear;
+            transition: all .3s linear;
+        }
+
+        .header-menu li:hover .header-menu-number {
+            text-decoration: none;
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+
+        }
+
+        .profile-menu {
+            float: right;
+            height: 80px;
+            padding-right: 20px;
+        }
+
+        .profile-menu p {
+            font-size: 17px;
+            display: inline-block;
+            line-height: 76px;
+            margin: 0;
+            padding-right: 10px;
+        }
+
+        .profile-menu a {
+            padding-left: 5px;
+        }
+
+        .profile-menu a:hover {
+            text-decoration: none;
+        }
+
+        .small-profile-picture {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .maincont{
+            font-family: "Montserrat", sans-serif;
+            background: linear-gradient(270deg, #ffead1, #ffb6bd, #e0b5ff);
+
+            background-size: 150% 150%;
+            animation: backgroundAnimation 10s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            flex-wrap: wrap;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .profile {
+            animation: loadProfile 0.6s ease-in-out;
+            animation-fill-mode: both;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            max-height: 750px;
+            max-width: 900px;
+            margin-top: 100px;
+        }
+
+        .profile-bg {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 30px 50px -20px rgba(14, 0, 47, 0.21);
+            width: calc(100% - 75px);
+            height: calc(100% - 110px);
+            z-index: -1;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            width: 100%;
+            /* flex-wrap: wrap; */
+        }
+
+        .profile-image {
+            animation: loadProfileImage 1s ease-in-out 0.5s;
+            animation-fill-mode: both;
+            position: relative;
+            border-radius: 10px;
+            box-shadow: 0 25px 45px -20px rgba(255, 0, 47, 0.3),
+                inset 0 0px 120px rgba(255, 0, 47, 0.2);
+            width: 45%;
+            flex: none;
+            background-image: url("../static/images/profile2.jpg");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .profile-image::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            background-color: #000;
+            opacity: 0.2;
+            mix-blend-mode: screen;
+        }
+
+        .camera {
+            color: #FFFF;
+            position: absolute;
+            bottom: 28px;
+            left: 28px;
+            font-size: 1.3rem;
+        }
+
+        .profile-info {
+            margin-top: 120px;
+            padding: 8% 8% 2% 8%;
+            position: relative;
+        }
+
+        .profile-info h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 0.7rem;
+            position: absolute;
+            animation-fill-mode: both;
+        }
+
+        h1.first-name {
+            animation: titleEffect 1s cubic-bezier(0, 0.2, 0.4, 1);
+            top: -115px;
+            left: -85px;
+        }
+
+        h1.second-name {
+            animation: titleEffect 1s cubic-bezier(0, 0, 0.3, 1);
+            top: -115px;
+            left: 150px;
+        }
+
+        .profile-info h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.2rem;
+            margin-top: 0;
+            margin-bottom: 5%;
+        }
+
+        .social-media-icons a,
+        .profile-info h2 {
+            color: #f63d47;
+        }
+
+        .profile-info p {
+            line-height: 1.5rem;
+        }
+
+        .social-media-icons {
+            display: flex;
+        }
+
+        .social-media-icons a {
+            margin-top: 7%;
+            font-size: 1.2rem;
+            flex: auto;
+            text-align: center;
+        }
+
+        .camera,
+        .social-media-icons a {
+            transition: text-shadow 0.5s ease;
+        }
+
+        .camera:hover,
+        .social-media-icons a:hover {
+            text-shadow: 0px 5px 15px rgba(255, 0, 47, 0.45);
+        }
+
+        .statistics {
+            width: 600px;
+            /* background: #786d80; */
+            margin-right: 10px;
+            margin-left: 10px;
+            padding: 5px;
+            display: flex;
+            justify-content: space-evenly;
+            line-height: 2rem;
+            align-items: center;
+        }
+
+        /* .statistics p {
+            margin: 3%;
+            flex: auto;
+            color: #f63d47;
+        }
+
+        .statistics p strong {
+            font-size: 1.4rem;
+            color: #000;
+            font-weight: 200;
+            margin-right: 0.3rem;
+        } */
+
+        .icon {
+            background: transparent no-repeat center;
+            background-size: contain;
+            background-origin: content-box;
+            width: 60px;
+            height: 60px;
+            padding: 15px;
+            border: none;
+            transition: transform 0.5s ease;
+        }
+
+        .icon:hover {
+            transform: scale(0.9);
+        }
+
+        .arrow {
+            flex: 0 1 75px;
+            background-image: url("https://zephyo.github.io/22Days/code/3/graphics/arrow.svg");
+        }
+
+        .right {
+            transform: rotate(180deg);
+        }
+
+        .right:hover {
+            transform: scale(0.9) rotate(180deg);
+        }
+
+        .close {
+            background-image: url("https://zephyo.github.io/22Days/code/3/graphics/close.svg");
+            position: absolute;
+            top: 5px;
+            right: 10px;
+        }
+
+        @media only screen and (max-aspect-ratio: 4/7) and (max-width: 600px) {
+            body{
+                display: flex;
+                flex-wrap: wrap;
+            }
+            .block{
+                display: none;
+            }
+            .profile {
+                margin: 3%;
+                height: 97%;
+                background: transparent;
+            }
+            .profile-bg{
+                background: transparent;
+            }
+            .profile-info{
+                background: #ffead1;
+            }
+
+            .container {
+                height: 86%;
+                flex-direction: column;
+                /* background: rgb(208, 189, 189); */
+
+            }
+
+            /* .container .statistics p{
+                display: block;
+            } */
+            .maincont .statistics{
+                max-width: 50px;
+            }
+            .maincont .statistics a{
+                /* background: #786d80; */
+                min-width: 100px;
+                margin:5px 10px ;
+                padding: 5px;
+                display: block;
+                line-height: 2rem;
+                /* align-items: center; */
+            }
+            .profile-image {
+                height: 40%;
+                width: calc(100% - 90px);
+                border-radius: 50;
+            }
+
+            .profile-bg {
+                width: 100%;
+            }
+
+            h1.first-name {
+                left: 60px;
+                
+            }
+
+            h1.second-name {
+                left: 90px;
+                top: -65px;
+            /* left: 150px; */
+            }
+        }
+
+        @media screen and (min-aspect-ratio: 4/7) {
+            .profile {
+                margin-left: 10%;
+                margin-right: 10%;
+            }
+        }
+
+        @keyframes backgroundAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes loadProfile {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0px);
+                opacity: 1;
+            }
+        }
+
+        @keyframes loadProfileImage {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0px);
+                opacity: 1;
+            }
+        }
+
+        @keyframes titleEffect {
+            from {
+                opacity: 0;
+                transform: translateX(-75px);
+            }
+
+            to {
+                transform: translateX(0px);
+                opacity: 1;
+            }
+        }
+        
+    </style>
+</head>
+
+<body>
+    
+    <header class="block">
+        <ul class="header-menu horizontal-list">
+            <li>
+                <a class="header-menu-tab" href="#1"><span
+                        class="icon entypo-cog scnd-font-color"></span>Settings</a>
+            </li>
+            <li>
+                <a class="header-menu-tab" href="#2"><span
+                        class="icon fontawesome-user scnd-font-color"></span>Account</a>
+            </li>
+            <li>
+                <a class="header-menu-tab" href="#3"><span
+                        class="icon fontawesome-envelope scnd-font-color"></span>Messages</a>
+                <a class="header-menu-number" href="#4">5</a>
+            </li>
+            <li>
+                <a class="header-menu-tab" href="#5"><span
+                        class="icon fontawesome-star-empty scnd-font-color"></span>Favorites</a>
+            </li>
+        </ul>
+        <div class="profile-menu">
+            <p>Me <a href="#26"><span class="entypo-down-open scnd-font-color"></span></a></p>
+            <div class="profile-picture small-profile-picture">
+                <img width="40px" alt="Anne Hathaway picture"
+                    src="http://upload.wikimedia.org/wikipedia/commons/e/e1/Anne_Hathaway_Face.jpg">
+            </div>
+        </div>
+    </header>
+    <div class="maincont">
+        <main class="profile">
+            <div class="profile-bg"></div>
+            <section class="container">
+                <aside class="profile-image">
+                    <a class="camera" href="#">
+                        <i class="fas fa-camera"></i>
+                    </a>
+                </aside>
+                <section class="profile-info">
+                    <h1 class="first-name text-white">Erickson </h1>
+                    <h1 class="second-name text-danger">Stores</h1> 
+    
+                    <h2>ABOUT</h2>
+                    <p>
+                        hello hello, I'm angela, artist and developer 🌼 student at stanford; intern at zynga 🌱 happy to be
+                        here! 🌿 let's code the best we can!
+                    </p>
+    
+                    <aside class="social-media-icons">
+                        <a href="https://twitter.com/zephybite" target="_blank">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://codepen.io/zephyo" target="_blank">
+                            <i class="fab fa-codepen"></i>
+                        </a>
+                        <a href="https://github.com/zephyo" target="_blank">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        </a>
+                        <a href="https://medium.com/@zephyo" target="_blank">
+                            <i class="fab fa-medium"></i>
+                        </a>
+                    </aside>
+                </section>
+            </section>
+            
+            <!-- <button class="icon close"></button> -->
+        </main>
+        <div class="statistics">
+            <a href="#" class="btn btn-outline-dark" >Add Product</a>
+            <a href="#" class="btn btn-outline-dark" >View Products</a>
+            <a href="#" class="btn btn-outline-dark" >show Earnings</a>
+        </div>
+        
+    
+    </div>
+    
+    <!-- <section class="statistics mb-5 bg-primary w-100"> -->
+        <!-- <button class="icon arrow left"></button>
+        <button class="icon arrow right"></button> -->
+        <!-- <p><a href="#" class="btn btn-outline-dark" >Add Product</a></p>
+        <p><a href="#" class="btn btn-outline-dark" >View Products</a></p>
+        <p><a href="#" class="btn btn-outline-dark" >Earnings</a></p> -->
+
+    <!-- </section> -->
+
+    
+
+
+</body>
+
+</html>
